@@ -1,38 +1,30 @@
- <html>
-     <head>
-        <title></title>
-        <style type="text/css">
+<!doctype html>
+<html>
+    <body>
+        <iframe id="foo"></iframe>
+        <script>
+            (function() {
+                var e = document.getElementById('foo'),
+                    f = function( el, url ) {
+                        el.src = url;
+                    },
+                    urls = [
+                    'http://www.msn.com/',
+                    'http://www.mtv.com/'
+                    ],
+                    i = 0,
+                    l = urls.length;
 
-        </style>
-        <script type="text/javascript">
-           var urls = [
-              "http://www.google.com"
-              ,"http://www.yahoo.com"
-              ,"http://www.ajaxian.com"
-              ,"http://www.ebay.com"
-           ];
-
-
-
-           function showUrl(idx) {
-              alert(idx + " Showing " + urls[idx]);
-              var f = document.getElementById("f");
-
-              // call the next load  after 5 seconds only after 
-              // this iframe loads
-              f.onload = function()   {
-                 var next = ++idx % urls.length;
-                 setTimeout(function(){
-                    showUrl(next);
-                 }, 5000);  
-              }
-              // set the src
-              f.src = urls[idx];
-           }
-
+                    (function rotation() {
+                        if ( i != l-1 ) { 
+                            i++
+                        } else {
+                            i = 0;
+                        }
+                        f( e, urls[i] );
+                        setTimeout( arguments.callee, 5000 );
+                    })();
+            })();
         </script>
-     </head>
-     <body onload="showUrl(0)" class="app-chrome">
-        <iframe id="f" src="about:blank"></iframe>
-     </body>
-  </html>
+    </body>
+</html>
